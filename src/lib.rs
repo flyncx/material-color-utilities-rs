@@ -1,6 +1,7 @@
 pub mod blend;
 pub mod contrast;
 pub mod dislike;
+pub mod dynamiccolor;
 pub mod hct;
 pub mod palettes;
 pub mod score;
