@@ -1,3 +1,4 @@
+pub mod blend;
 pub mod contrast;
 pub mod dislike;
 pub mod hct;
