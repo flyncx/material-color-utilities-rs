@@ -9,7 +9,7 @@ A rust port of material-color-utilities dart code.
 | blend        | ✅      | not yet        |
 | contrast     | ✅      | not yet        |
 | dislike      | ✅      | not yet        |
-| dynamiccolor | not yet | not yet        |
+| dynamiccolor | ✅      | not yet        |
 | hct          | ✅      | not yet        |
 | palettes     | ✅      | not yet        |
 | quantize     | not yet | not yet        |
