@@ -6,3 +6,4 @@ pub mod scheme_monochrome;
 pub mod scheme_neutral;
 pub mod scheme_rainbow;
 pub mod scheme_tonal_spot;
+pub mod scheme_vibrant;
