@@ -4,6 +4,7 @@ pub mod dislike;
 pub mod dynamiccolor;
 pub mod hct;
 pub mod palettes;
+pub mod quantize;
 pub mod scheme;
 pub mod score;
 pub mod temperature;
