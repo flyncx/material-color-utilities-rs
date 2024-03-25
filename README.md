@@ -13,7 +13,7 @@ A rust port of material-color-utilities dart code.
 | hct          | ✅      | not yet        |
 | palettes     | ✅      | not yet        |
 | quantize     | not yet | not yet        |
-| scheme       | not yet | not yet        |
+| scheme       | ✅      | not yet        |
 | score        | ✅      | not yet        |
 | temperature  | ✅      | not yet        |
 | utils        | ✅      | not yet        |
