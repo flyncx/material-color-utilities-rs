@@ -188,12 +188,15 @@ impl TonalPalette {
             None => Hct::from(self.hue, self.chroma, tone),
         }
     }
+}
 
-    pub fn to_string(&mut self) -> String {
+impl ToString for TonalPalette {
+    fn to_string(&self) -> String {
+        let mut copy = self.clone();
         if self._is_from_cache {
-            return format!("TonalPalette.of({}, {})", self.hue, self.chroma);
+            return format!("TonalPalette.of({}, {})", copy.hue, copy.chroma);
         } else {
-            let list = self.get_as_list();
+            let list = copy.get_as_list();
             let mp: Vec<String> = list.iter().map(|it| it.to_string()).collect();
             return format!("TonalPalette.fromList([{}])", mp.join(", "));
         }

@@ -38,14 +38,6 @@ impl Hct {
         return Hct::new(argb);
     }
 
-    pub fn to_string(&self) -> String {
-        format!(
-            "H{} C{} T{}",
-            self.get_hue().round().to_string(),
-            self.get_chroma().round(),
-            self.get_tone().round().to_string()
-        )
-    }
     /// HCT representation of [argb].
     pub fn from_int(argb: i64) -> Hct {
         return Hct::new(argb);
@@ -157,5 +149,16 @@ impl Hct {
             ColorUtils::lstar_from_y(viewed_in_vc[1]),
         );
         return recast_hct;
+    }
+}
+
+impl ToString for Hct {
+    fn to_string(&self) -> String {
+        format!(
+            "H{} C{} T{}",
+            self.get_hue().round().to_string(),
+            self.get_chroma().round(),
+            self.get_tone().round().to_string()
+        )
     }
 }
