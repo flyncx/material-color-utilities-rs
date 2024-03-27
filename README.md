@@ -12,7 +12,7 @@ A rust port of material-color-utilities dart code.
 | dynamiccolor | ✅      | not yet        |
 | hct          | ✅      | not yet        |
 | palettes     | ✅      | not yet        |
-| quantize     | not yet | not yet        |
+| quantize     | ✅      | not yet        |
 | scheme       | ✅      | not yet        |
 | score        | ✅      | not yet        |
 | temperature  | ✅      | not yet        |
