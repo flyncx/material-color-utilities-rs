@@ -8,4 +8,5 @@ pub mod quantize;
 pub mod scheme;
 pub mod score;
 pub mod temperature;
+mod tests;
 pub mod utils;
