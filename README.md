@@ -6,9 +6,9 @@ A rust port of material-color-utilities dart code.
 
 | Module       | Ported  | Test Available |
 | ------------ | ------- | -------------- |
-| blend        | ✅      | not yet        |
-| contrast     | ✅      | not yet        |
-| dislike      | ✅      | not yet        |
+| blend        | ✅      | ✅            |
+| contrast     | ✅      | ✅            |
+| dislike      | ✅      | ✅            |
 | dynamiccolor | ✅      | not yet        |
 | hct          | ✅      | not yet        |
 | palettes     | ✅      | not yet        |
@@ -16,4 +16,5 @@ A rust port of material-color-utilities dart code.
 | scheme       | ✅      | not yet        |
 | score        | ✅      | not yet        |
 | temperature  | ✅      | not yet        |
-| utils        | ✅      | not yet        |
+| math-utils   | ✅      | ✅            |
+| color-utils  | ✅      | ✅            |
