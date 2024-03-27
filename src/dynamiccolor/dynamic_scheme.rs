@@ -79,13 +79,15 @@ impl DynamicScheme {
         if rotations.len() == 1 {
             return MathUtils::sanitize_degrees_double(source_color.get_hue() + rotations[0]);
         }
-        let size = hues.len();
-        for i in 0..(size - 2) {
-            let this_hue = hues[i];
-            let next_hue = hues[i + 1];
+        let size = hues.len() as i64;
+        let mut i: i64 = 0;
+        while i <= (size - 2) {
+            let this_hue = hues[i as usize];
+            let next_hue = hues[i as usize + 1];
             if this_hue < source_hue && source_hue < next_hue {
-                return MathUtils::sanitize_degrees_double(source_hue + rotations[i]);
+                return MathUtils::sanitize_degrees_double(source_hue + rotations[i as usize]);
             }
+            i += 1;
         }
         // If this statement executes, something is wrong, there should have been a rotation
         // found using the arrays.
