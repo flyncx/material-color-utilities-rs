@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub trait Quantizer {
-    fn quantize(pixels: Vec<i64>, max_colors: i64) -> QuantizerResult;
+    fn quantize(&mut self, pixels: Vec<i64>, max_colors: i64) -> QuantizerResult;
 }
 
 pub struct QuantizerResult {
