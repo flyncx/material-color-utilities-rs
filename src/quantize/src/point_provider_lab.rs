@@ -3,6 +3,11 @@ use crate::utils::color_utils::ColorUtils;
 use super::point_provider::PointProvider;
 
 pub struct PointProviderLab {}
+impl PointProviderLab {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
 impl PointProvider for PointProviderLab {
     fn from_int(argb: i64) -> Vec<f64> {
         return ColorUtils::lab_from_argb(argb);
