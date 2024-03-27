@@ -4,4 +4,5 @@ pub mod contrast_test;
 pub mod dislike_analyzer_test;
 pub mod dynamic_scheme_test;
 pub mod hct_round_trip_test;
+pub mod hct_test;
 pub mod math_utils_test;
