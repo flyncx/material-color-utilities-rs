@@ -10,12 +10,12 @@ pub mod hct_test {
         utils::{color_utils::ColorUtils, string_utils::StringUtils},
     };
 
-    const red: i64 = 0xffff0000;
-    const black: i64 = 0xff000000;
-    const white: i64 = 0xffffffff;
-    const green: i64 = 0xff00ff00;
-    const blue: i64 = 0xff0000ff;
-    const midgray: i64 = 0xff777777;
+    const RED: i64 = 0xffff0000;
+    const BLACK: i64 = 0xff000000;
+    const WHITE: i64 = 0xffffffff;
+    const GREEN: i64 = 0xff00ff00;
+    const BLUE: i64 = 0xff0000ff;
+    const MIDGRAY: i64 = 0xff777777;
 
     #[test]
     fn hash_code_basics() {
@@ -31,9 +31,9 @@ pub mod hct_test {
 
     #[test]
     fn conversions_are_reflexive() {
-        let cam = Cam16::from_int(red);
+        let cam = Cam16::from_int(RED);
         let color = cam.viewed(ViewingConditions::standard());
-        assert_eq!(color, red);
+        assert_eq!(color, RED);
     }
 
     #[test]
@@ -53,7 +53,7 @@ pub mod hct_test {
 
     #[test]
     fn cam_red() {
-        let cam = Cam16::from_int(red);
+        let cam = Cam16::from_int(RED);
         assert_approx_eq::assert_approx_eq!(46.445, cam.j, 0.001);
         assert_approx_eq::assert_approx_eq!(113.357, cam.chroma, 0.001);
         assert_approx_eq::assert_approx_eq!(27.408, cam.hue, 0.001);
@@ -64,7 +64,7 @@ pub mod hct_test {
 
     #[test]
     fn cam_green() {
-        let cam = Cam16::from_int(green);
+        let cam = Cam16::from_int(GREEN);
         assert_approx_eq::assert_approx_eq!(79.331, cam.j, 0.001);
         assert_approx_eq::assert_approx_eq!(108.410, cam.chroma, 0.001);
         assert_approx_eq::assert_approx_eq!(142.139, cam.hue, 0.001);
@@ -75,7 +75,7 @@ pub mod hct_test {
 
     #[test]
     fn cam_blue() {
-        let cam = Cam16::from_int(blue);
+        let cam = Cam16::from_int(BLUE);
         assert_approx_eq::assert_approx_eq!(25.465, cam.j, 0.001);
         assert_approx_eq::assert_approx_eq!(87.230, cam.chroma, 0.001);
         assert_approx_eq::assert_approx_eq!(282.788, cam.hue, 0.001);
@@ -86,7 +86,7 @@ pub mod hct_test {
 
     #[test]
     fn cam_black() {
-        let cam = Cam16::from_int(black);
+        let cam = Cam16::from_int(BLACK);
         assert_approx_eq::assert_approx_eq!(0.0, cam.j, 0.001);
         assert_approx_eq::assert_approx_eq!(0.0, cam.chroma, 0.001);
         assert_approx_eq::assert_approx_eq!(0.0, cam.hue, 0.001);
@@ -97,7 +97,7 @@ pub mod hct_test {
 
     #[test]
     fn cam_white() {
-        let cam = Cam16::from_int(white);
+        let cam = Cam16::from_int(WHITE);
         assert_approx_eq::assert_approx_eq!(100.0, cam.j, 0.001);
         assert_approx_eq::assert_approx_eq!(2.869, cam.chroma, 0.001);
         assert_approx_eq::assert_approx_eq!(209.492, cam.hue, 0.001);
@@ -108,7 +108,7 @@ pub mod hct_test {
 
     #[test]
     fn gamut_map_red() {
-        let color_to_test = red;
+        let color_to_test = RED;
         let cam = Cam16::from_int(color_to_test);
         let color = Hct::from(
             cam.hue,
@@ -121,7 +121,7 @@ pub mod hct_test {
 
     #[test]
     fn gamut_map_green() {
-        let color_to_test = green;
+        let color_to_test = GREEN;
         let cam = Cam16::from_int(color_to_test);
         let color = Hct::from(
             cam.hue,
@@ -134,7 +134,7 @@ pub mod hct_test {
 
     #[test]
     fn gamut_map_blue() {
-        let color_to_test = blue;
+        let color_to_test = BLUE;
         let cam = Cam16::from_int(color_to_test);
         let color = Hct::from(
             cam.hue,
@@ -147,7 +147,7 @@ pub mod hct_test {
 
     #[test]
     fn gamut_map_white() {
-        let color_to_test = white;
+        let color_to_test = WHITE;
         let cam = Cam16::from_int(color_to_test);
         let color = Hct::from(
             cam.hue,
@@ -160,7 +160,7 @@ pub mod hct_test {
 
     #[test]
     fn gamut_map_midgray() {
-        let color_to_test = midgray;
+        let color_to_test = MIDGRAY;
         let cam = Cam16::from_int(color_to_test);
         let color = Hct::from(
             cam.hue,
@@ -229,11 +229,11 @@ pub mod hct_test {
     pub mod cam16_to_xyz {
         use crate::hct::{cam16::Cam16, viewing_conditions::ViewingConditions};
 
-        use super::red;
+        use super::RED;
 
         #[test]
         fn without_array() {
-            let color_to_test = red;
+            let color_to_test = RED;
             let cam = Cam16::from_int(color_to_test);
             let xyz = cam.xyz_in_viewing_conditions(ViewingConditions::s_rgb(), None);
             assert_approx_eq::assert_approx_eq!(xyz[0], 41.23, 0.01);
@@ -243,7 +243,7 @@ pub mod hct_test {
 
         #[test]
         fn with_array() {
-            let color_to_test = red;
+            let color_to_test = RED;
             let cam = Cam16::from_int(color_to_test);
             let xyz = cam
                 .xyz_in_viewing_conditions(ViewingConditions::s_rgb(), Some(vec![0.0, 0.0, 0.0]));
@@ -257,14 +257,14 @@ pub mod hct_test {
     pub mod color_relativity {
         use crate::{
             hct::{hct::Hct, viewing_conditions::ViewingConditions},
-            tests::hct_test::hct_test::{black, blue, green, midgray, white},
+            tests::hct_test::hct_test::{BLACK, BLUE, GREEN, MIDGRAY, WHITE},
         };
 
-        use super::red;
+        use super::RED;
 
         #[test]
         fn red_in_black() {
-            let color_to_test = red;
+            let color_to_test = RED;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -281,7 +281,7 @@ pub mod hct_test {
 
         #[test]
         fn red_in_white() {
-            let color_to_test = red;
+            let color_to_test = RED;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -298,7 +298,7 @@ pub mod hct_test {
 
         #[test]
         fn green_in_black() {
-            let color_to_test = green;
+            let color_to_test = GREEN;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -315,7 +315,7 @@ pub mod hct_test {
 
         #[test]
         fn green_in_white() {
-            let color_to_test = green;
+            let color_to_test = GREEN;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -332,7 +332,7 @@ pub mod hct_test {
 
         #[test]
         fn blue_in_black() {
-            let color_to_test = blue;
+            let color_to_test = BLUE;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -349,7 +349,7 @@ pub mod hct_test {
 
         #[test]
         fn blue_in_white() {
-            let color_to_test = blue;
+            let color_to_test = BLUE;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -366,7 +366,7 @@ pub mod hct_test {
 
         #[test]
         fn white_in_black() {
-            let color_to_test = white;
+            let color_to_test = WHITE;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -383,7 +383,7 @@ pub mod hct_test {
 
         #[test]
         fn white_in_white() {
-            let color_to_test = white;
+            let color_to_test = WHITE;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -400,7 +400,7 @@ pub mod hct_test {
 
         #[test]
         fn midgray_in_black() {
-            let color_to_test = midgray;
+            let color_to_test = MIDGRAY;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -417,7 +417,7 @@ pub mod hct_test {
 
         #[test]
         fn midgray_in_white() {
-            let color_to_test = midgray;
+            let color_to_test = MIDGRAY;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -434,7 +434,7 @@ pub mod hct_test {
 
         #[test]
         fn black_in_black() {
-            let color_to_test = black;
+            let color_to_test = BLACK;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
@@ -451,7 +451,7 @@ pub mod hct_test {
 
         #[test]
         fn black_in_white() {
-            let color_to_test = black;
+            let color_to_test = BLACK;
             let hct = Hct::from_int(color_to_test);
             assert_eq!(
                 hct.in_viewing_conditions(ViewingConditions::make(
