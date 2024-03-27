@@ -5,7 +5,7 @@ pub trait Quantizer {
         &mut self,
         pixels: Vec<i64>,
         max_colors: i64,
-        returnInputPixelToClusterPixel: Option<bool>,
+        return_input_pixel_to_cluster_pixel: Option<bool>,
     ) -> QuantizerResult;
 }
 
