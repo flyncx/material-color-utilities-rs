@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Instant};
 
 use rand::{Rng, SeedableRng};
 
@@ -285,7 +285,7 @@ impl QuantizerWsmeans {
             }
             Self::debug_log(format!(
                 "took {} ms to create input to cluster map",
-                stopwatch.elapsed_milliseconds
+                stopwatch.elapsed_milliseconds()
             ));
         }
 
@@ -304,15 +304,18 @@ impl QuantizerWsmeans {
 
 #[derive(Clone, Copy)]
 struct Stopwatch {
-    pub elapsed_milliseconds: i64,
+    data: Instant,
 }
 impl Stopwatch {
     pub fn new() -> Stopwatch {
         Stopwatch {
-            elapsed_milliseconds: 0,
+            data: Instant::now(),
         }
     }
     pub fn start(&self) -> Stopwatch {
         *self
+    }
+    pub fn elapsed_milliseconds(&self) -> i64 {
+        self.data.elapsed().as_millis() as i64
     }
 }
