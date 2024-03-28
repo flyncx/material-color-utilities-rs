@@ -22,3 +22,5 @@ pub mod quantizer_celebi_test;
 pub mod quantizer_wsmeans_test;
 #[cfg(test)]
 pub mod quantizer_wu_test;
+#[cfg(test)]
+pub mod temperature_cache_test;
