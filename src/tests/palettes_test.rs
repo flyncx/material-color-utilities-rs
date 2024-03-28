@@ -1,4 +1,3 @@
-#[cfg(test)]
 pub mod tonal_palette {
     #[cfg(test)]
     pub mod of_and_from_list_constructors {
