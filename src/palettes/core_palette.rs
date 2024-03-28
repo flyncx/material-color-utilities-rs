@@ -1,3 +1,5 @@
+use std::hash::Hash;
+
 use crate::hct::cam16::Cam16;
 
 use super::tonal_palette::TonalPalette;
@@ -5,6 +7,7 @@ use super::tonal_palette::TonalPalette;
 /// An intermediate concept between the key color for a UI theme, and a full
 /// color scheme. 5 tonal palettes are generated, all except one use the same
 /// hue as the key color, and all vary in chroma.
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub struct CorePalette {
     pub primary: TonalPalette,
     pub secondary: TonalPalette,
@@ -19,7 +22,7 @@ impl CorePalette {
     }
 
     /// The number of generated tonal palettes.
-    const SIZE: usize = 5;
+    pub const SIZE: usize = 5;
 
     /// Create a [CorePalette] from a source ARGB color.
     pub fn of(argb: i64) -> CorePalette {
@@ -43,7 +46,7 @@ impl CorePalette {
         return CorePalette::_content_of(cam.hue, cam.chroma);
     }
 
-    pub fn _content_of(hue: f64, chroma: f64) -> CorePalette {
+    fn _content_of(hue: f64, chroma: f64) -> CorePalette {
         CorePalette {
             primary: TonalPalette::of(hue, chroma),
             secondary: TonalPalette::of(hue, chroma / 3.0),
@@ -99,7 +102,6 @@ impl CorePalette {
         list.extend(self.tertiary.get_as_list().iter());
         list.extend(self.neutral.get_as_list().iter());
         list.extend(self.neutral_variant.get_as_list().iter());
-        list.extend(self.primary.get_as_list().iter());
 
         return list;
     }
@@ -122,40 +124,21 @@ fn _get_partition(list: Vec<i64>, partition_number: usize, partition_size: usize
     return sublist.to_vec();
 }
 
-/*
-
-
-class CorePalette {
-  @override
-  bool operator ==(Object other) =>
-      other is CorePalette &&
-      primary == other.primary &&
-      secondary == other.secondary &&
-      tertiary == other.tertiary &&
-      neutral == other.neutral &&
-      neutralVariant == other.neutralVariant &&
-      error == other.error;
-
-  @override
-  int get hashCode => Object.hash(
-        primary,
-        secondary,
-        tertiary,
-        neutral,
-        neutralVariant,
-        error,
-      );
-
-  @override
-  String toString() {
-    return 'primary: $primary\n'
-        'secondary: $secondary\n'
-        'tertiary: $tertiary\n'
-        'neutral: $neutral\n'
-        'neutralVariant: $neutralVariant\n'
-        'error: $error\n';
-  }
+impl ToString for CorePalette {
+    fn to_string(&self) -> String {
+        return format!(
+            "primary: {}\n
+            secondary: {}\n
+            tertiary: {}\n
+            neutral: {}\n
+            neutralVariant: {}\n
+            error: {}\n",
+            self.primary.to_string(),
+            self.secondary.to_string(),
+            self.tertiary.to_string(),
+            self.neutral.to_string(),
+            self.neutral_variant.to_string(),
+            Self::get_error().to_string()
+        );
+    }
 }
-
-
- */

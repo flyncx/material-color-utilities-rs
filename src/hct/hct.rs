@@ -7,7 +7,7 @@ use super::{cam16::Cam16, src::hct_solver::HctSolver, viewing_conditions::Viewin
 /// HCT, hue, chroma, and tone. A color system that provides a perceptually
 /// accurate color measurement system that can also accurately render what
 /// colors will appear as in different lighting environments.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Hct {
     _hue: f64,
     _chroma: f64,

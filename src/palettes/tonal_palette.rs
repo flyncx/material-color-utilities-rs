@@ -11,7 +11,7 @@ use std::{collections::HashMap, hash::Hasher};
 /// representing ARBG colors. Correctness (constant hue and chroma) of the input
 /// is not enforced. [get] will only return the input colors, corresponding to
 /// [commonTones]. This also initializes the key color to black.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TonalPalette {
     pub hue: f64,
     pub chroma: f64,
@@ -25,7 +25,7 @@ pub struct TonalPalette {
 
 impl TonalPalette {
     /// Commonly-used tone values.
-    const COMMON_TONES: [i64; 13] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100];
+    pub const COMMON_TONES: [i64; 13] = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100];
 
     pub const COMMON_SIZE: usize = Self::COMMON_TONES.len();
 
