@@ -101,12 +101,16 @@ impl Score {
 
         // Hues with more usage in neighboring 30 degree slice get a larger number.
         let mut hue_excited_proportions = [0.0; 360];
-        for hue in 0..360 {
-            let proportion = hue_population[hue] / population_sum;
-            for i in (hue - 14)..(hue + 16) {
-                let neighbor_hue = MathUtils::sanitize_degrees_int(i.try_into().unwrap());
+        let mut hue: i64 = 0;
+        while hue < 360 {
+            let proportion = (hue_population[hue as usize] as f64) / (population_sum as f64);
+            let mut i: i64 = hue - 14;
+            while i < hue + 16 {
+                let neighbor_hue = MathUtils::sanitize_degrees_int(i);
                 hue_excited_proportions[neighbor_hue as usize] += proportion as f64;
+                i += 1;
             }
+            hue += 1;
         }
 
         // Scores each HCT color based on usage and chroma, while optionally
@@ -143,7 +147,8 @@ impl Score {
         // 90 degrees(maximum difference for 4 colors) then decreasing down to a
         // 15 degree minimum.
         let mut chosen_colors: Vec<&Hct> = Vec::new();
-        for difference_degrees in (15..=90).rev() {
+        let mut difference_degrees: i64 = 90;
+        while difference_degrees >= 15 {
             chosen_colors.clear();
             for entry in &scored_hcts {
                 let hct = &entry.hct;
@@ -162,6 +167,7 @@ impl Score {
             if chosen_colors.len() as i64 >= desired {
                 break;
             }
+            difference_degrees -= 1;
         }
         let mut colors: Vec<i64> = Vec::new();
         if chosen_colors.is_empty() {
@@ -173,11 +179,3 @@ impl Score {
         return colors;
     }
 }
-
-/*
-class Score {
-
-
-
-  }
-   */
