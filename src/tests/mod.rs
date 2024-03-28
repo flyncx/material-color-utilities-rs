@@ -16,3 +16,5 @@ pub mod hct_test;
 pub mod math_utils_test;
 #[cfg(test)]
 pub mod palettes_test;
+#[cfg(test)]
+pub mod quantizer_wu_test;
