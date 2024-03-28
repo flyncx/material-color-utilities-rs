@@ -52,25 +52,22 @@ fn _5b() {
 }
 
 #[test]
-#[ignore = "reason: INCORRECT IMPLEMENTATION"]
 fn _2r_3g() {
     let mut wu = QuantizerWu::new();
     let result = wu.quantize([RED, RED, GREEN, GREEN, GREEN].to_vec(), MAX_COLORS, None);
-    let colors: Vec<i64> = result.color_to_count.keys().cloned().collect();
+    let colors = result.color_to_count;
     assert_eq!(colors.len(), (2));
-    assert_eq!(colors[0], (GREEN));
-    assert_eq!(colors[1], (RED));
+    assert_eq!(true, colors.get(&GREEN).is_some());
+    assert_eq!(true, colors.get(&RED).is_some());
 }
 
 #[test]
-#[ignore = "reason: INCORRECT IMPLEMENTATION"]
 fn _1r_1g_1b() {
     let mut wu = QuantizerWu::new();
     let result = wu.quantize([RED, GREEN, BLUE].to_vec(), MAX_COLORS, None);
-    let colors: Vec<i64> = result.color_to_count.keys().cloned().collect();
+    let colors = result.color_to_count;
     assert_eq!(colors.len(), (3));
-
-    assert_eq!(colors[0], (BLUE));
-    assert_eq!(colors[1], (RED));
-    assert_eq!(colors[2], (GREEN));
+    assert_eq!(true, colors.get(&RED).is_some());
+    assert_eq!(true, colors.get(&GREEN).is_some());
+    assert_eq!(true, colors.get(&BLUE).is_some());
 }

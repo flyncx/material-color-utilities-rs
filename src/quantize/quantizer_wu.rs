@@ -145,7 +145,9 @@ impl QuantizerWu {
         let mut next: i64 = 0;
         let mut generated_color_count: i64 = max_color_count;
         for mut i in 1..max_color_count {
-            if self.cut(self.cubes[next as usize], self.cubes[i as usize]) {
+            let one = next as usize;
+            let two = i as usize;
+            if self.cut(one, two) {
                 volume_variance[next as usize] = if self.cubes[next as usize].vol > 1 {
                     self.variance(self.cubes[next as usize])
                 } else {
@@ -215,37 +217,37 @@ impl QuantizerWu {
         return xx - (hypotenuse / volume_) as f64;
     }
 
-    pub fn cut(&self, mut one: Box, mut two: Box) -> bool {
-        let whole_r = Self::volume(one.clone(), self.moments_r.clone());
-        let whole_g = Self::volume(one.clone(), self.moments_g.clone());
-        let whole_b = Self::volume(one.clone(), self.moments_b.clone());
-        let whole_w = Self::volume(one.clone(), self.weights.clone());
+    pub fn cut(&mut self, one_index: usize, two_index: usize) -> bool {
+        let whole_r = Self::volume(self.cubes[one_index].clone(), self.moments_r.clone());
+        let whole_g = Self::volume(self.cubes[one_index].clone(), self.moments_g.clone());
+        let whole_b = Self::volume(self.cubes[one_index].clone(), self.moments_b.clone());
+        let whole_w = Self::volume(self.cubes[one_index].clone(), self.weights.clone());
 
         let max_rresult = self.maximize(
-            one.clone(),
+            self.cubes[one_index].clone(),
             Direction::Red,
-            one.r0 + 1,
-            one.r1,
+            self.cubes[one_index].r0 + 1,
+            self.cubes[one_index].r1,
             whole_r,
             whole_g,
             whole_b,
             whole_w,
         );
         let max_gresult = self.maximize(
-            one.clone(),
+            self.cubes[one_index].clone(),
             Direction::Green,
-            one.g0 + 1,
-            one.g1,
+            self.cubes[one_index].g0 + 1,
+            self.cubes[one_index].g1,
             whole_r,
             whole_g,
             whole_b,
             whole_w,
         );
         let max_bresult = self.maximize(
-            one.clone(),
+            self.cubes[one_index].clone(),
             Direction::Blue,
-            one.b0 + 1,
-            one.b1,
+            self.cubes[one_index].b0 + 1,
+            self.cubes[one_index].b1,
             whole_r,
             whole_g,
             whole_b,
@@ -267,32 +269,38 @@ impl QuantizerWu {
             cut_direction = Direction::Blue;
         }
 
-        two.r1 = one.r1;
-        two.g1 = one.g1;
-        two.b1 = one.b1;
+        self.cubes[two_index].r1 = self.cubes[one_index].r1;
+        self.cubes[two_index].g1 = self.cubes[one_index].g1;
+
+        self.cubes[two_index].b1 = self.cubes[one_index].b1;
         match cut_direction {
             Direction::Red => {
-                one.r1 = max_rresult.cut_location;
-                two.r0 = one.r1;
-                two.g0 = one.g0;
-                two.b0 = one.b0;
+                self.cubes[one_index].r1 = max_rresult.cut_location;
+                self.cubes[two_index].r0 = self.cubes[one_index].r1;
+                self.cubes[two_index].g0 = self.cubes[one_index].g0;
+                self.cubes[two_index].b0 = self.cubes[one_index].b0;
             }
             Direction::Green => {
-                one.g1 = max_gresult.cut_location;
-                two.r0 = one.r0;
-                two.g0 = one.g1;
-                two.b0 = one.b0;
+                self.cubes[one_index].g1 = max_gresult.cut_location;
+                self.cubes[two_index].r0 = self.cubes[one_index].r0;
+                self.cubes[two_index].g0 = self.cubes[one_index].g1;
+                self.cubes[two_index].b0 = self.cubes[one_index].b0;
             }
             Direction::Blue => {
-                one.b1 = max_bresult.cut_location;
-                two.r0 = one.r0;
-                two.g0 = one.g0;
-                two.b0 = one.b1;
+                self.cubes[one_index].b1 = max_bresult.cut_location;
+                self.cubes[two_index].r0 = self.cubes[one_index].r0;
+                self.cubes[two_index].g0 = self.cubes[one_index].g0;
+                self.cubes[two_index].b0 = self.cubes[one_index].b1;
             }
         }
 
-        one.vol = (one.r1 - one.r0) * (one.g1 - one.g0) * (one.b1 - one.b0);
-        two.vol = (two.r1 - two.r0) * (two.g1 - two.g0) * (two.b1 - two.b0);
+        self.cubes[one_index].vol = (self.cubes[one_index].r1 - self.cubes[one_index].r0)
+            * (self.cubes[one_index].g1 - self.cubes[one_index].g0)
+            * (self.cubes[one_index].b1 - self.cubes[one_index].b0);
+        self.cubes[two_index].vol = (self.cubes[two_index].r1 - self.cubes[two_index].r0)
+            * (self.cubes[two_index].g1 - self.cubes[two_index].g0)
+            * (self.cubes[two_index].b1 - self.cubes[two_index].b0);
+
         return true;
     }
 
