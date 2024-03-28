@@ -17,6 +17,8 @@ pub mod math_utils_test;
 #[cfg(test)]
 pub mod palettes_test;
 #[cfg(test)]
+pub mod quantizer_celebi_test;
+#[cfg(test)]
 pub mod quantizer_wsmeans_test;
 #[cfg(test)]
 pub mod quantizer_wu_test;
