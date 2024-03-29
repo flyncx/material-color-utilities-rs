@@ -90,8 +90,8 @@ impl DynamicScheme {
     pub fn new(
         source_color_argb: i64,
         variant: Variant,
-        is_dark: bool,
         contrast_level: Option<f64>,
+        is_dark: bool,
         primary_palette: TonalPalette,
         secondary_palette: TonalPalette,
         tertiary_palette: TonalPalette,

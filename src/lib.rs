@@ -45,8 +45,8 @@ pub mod sanity {
         let scheme = DynamicScheme::new(
             dominant,
             Variant::TonalSpot,
-            true,
             None,
+            true,
             core.primary,
             core.secondary,
             core.tertiary,

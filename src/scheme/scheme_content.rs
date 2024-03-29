@@ -1,4 +1,4 @@
-/* use crate::{
+use crate::{
     dislike::dislike_analyzer::DislikeAnalyzer,
     dynamiccolor::{dynamic_scheme::DynamicScheme, variant::Variant},
     hct::hct::Hct,
@@ -33,7 +33,7 @@ impl SchemeContent {
                     source_color_hct.get_hue(),
                     (source_color_hct.get_chroma() - 32.0).max(source_color_hct.get_chroma() * 0.5),
                 ),
-                TonalPalette::from_hct(DislikeAnalyzer::fix_if_disliked(temp.clone())),
+                TonalPalette::from_hct(&DislikeAnalyzer::fix_if_disliked(temp)),
                 TonalPalette::of(
                     source_color_hct.get_hue(),
                     source_color_hct.get_chroma() / 8.0,
@@ -46,4 +46,3 @@ impl SchemeContent {
         }
     }
 }
- */

@@ -1,4 +1,4 @@
-/* use crate::{
+use crate::{
     dynamiccolor::{dynamic_scheme::DynamicScheme, variant::Variant},
     hct::hct::Hct,
     palettes::tonal_palette::TonalPalette,
@@ -35,17 +35,17 @@ impl SchemeExpressive {
                 ),
                 TonalPalette::of(
                     DynamicScheme::get_rotated_hue(
-                        source_color_hct.clone(),
-                        Self::HUES.to_vec(),
-                        Self::SECONDARY_ROTATIONS.to_vec(),
+                        &source_color_hct,
+                        &Self::HUES.to_vec(),
+                        &Self::SECONDARY_ROTATIONS.to_vec(),
                     ),
                     24.0,
                 ),
                 TonalPalette::of(
                     DynamicScheme::get_rotated_hue(
-                        source_color_hct.clone(),
-                        Self::HUES.to_vec(),
-                        Self::TERTIARY_ROTATIONS.to_vec(),
+                        &source_color_hct,
+                        &Self::HUES.to_vec(),
+                        &Self::TERTIARY_ROTATIONS.to_vec(),
                     ),
                     32.0,
                 ),
@@ -55,4 +55,3 @@ impl SchemeExpressive {
         }
     }
 }
- */
