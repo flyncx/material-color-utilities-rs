@@ -1,5 +1,6 @@
 use crate::dynamiccolor::dynamic_color::DynamicColor;
 
+#[derive(PartialEq)]
 pub enum TonePolarity {
     Darker,
     Lighter,

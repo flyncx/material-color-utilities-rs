@@ -1,4 +1,4 @@
-use crate::{
+/* use crate::{
     dynamiccolor::{dynamic_scheme::DynamicScheme, variant::Variant},
     hct::hct::Hct,
     palettes::tonal_palette::TonalPalette,
@@ -29,3 +29,4 @@ impl SchemeRainbow {
         }
     }
 }
+ */
