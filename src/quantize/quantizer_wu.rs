@@ -16,7 +16,12 @@ pub struct QuantizerWu {
     pub cubes: Vec<Box>,
 }
 impl Quantizer for QuantizerWu {
-    fn quantize(&mut self, pixels: Vec<i64>, color_count: i64, _: Option<bool>) -> QuantizerResult {
+    fn quantize(
+        &mut self,
+        pixels: &Vec<i64>,
+        color_count: i64,
+        _: Option<bool>,
+    ) -> QuantizerResult {
         let result = QuantizerMap {}.quantize(pixels, color_count, None);
         self.construct_histogram(result.color_to_count);
         self.compute_moments();

@@ -30,7 +30,7 @@ fn hash_code_basics() {
 #[test]
 fn conversions_are_reflexive() {
     let cam = Cam16::from_int(RED);
-    let color = cam.viewed(ViewingConditions::standard());
+    let color = cam.viewed(&ViewingConditions::standard());
     assert_eq!(color, RED);
 }
 
@@ -233,7 +233,7 @@ pub mod cam16_to_xyz {
     fn without_array() {
         let color_to_test = RED;
         let cam = Cam16::from_int(color_to_test);
-        let xyz = cam.xyz_in_viewing_conditions(ViewingConditions::s_rgb(), None);
+        let xyz = cam.xyz_in_viewing_conditions(&ViewingConditions::s_rgb(), None);
         assert_approx_eq::assert_approx_eq!(xyz[0], 41.23, 0.01);
         assert_approx_eq::assert_approx_eq!(xyz[1], 21.26, 0.01);
         assert_approx_eq::assert_approx_eq!(xyz[2], 1.93, 0.01);
@@ -244,7 +244,7 @@ pub mod cam16_to_xyz {
         let color_to_test = RED;
         let cam = Cam16::from_int(color_to_test);
         let xyz =
-            cam.xyz_in_viewing_conditions(ViewingConditions::s_rgb(), Some(vec![0.0, 0.0, 0.0]));
+            cam.xyz_in_viewing_conditions(&ViewingConditions::s_rgb(), Some(&vec![0.0, 0.0, 0.0]));
         assert_approx_eq::assert_approx_eq!(xyz[0], 41.23, 0.01);
         assert_approx_eq::assert_approx_eq!(xyz[1], 21.26, 0.01);
         assert_approx_eq::assert_approx_eq!(xyz[2], 1.93, 0.01);
@@ -265,7 +265,7 @@ pub mod color_relativity {
         let color_to_test = RED;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xff9F5C51)
         );
@@ -276,9 +276,13 @@ pub mod color_relativity {
         let color_to_test = RED;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xffFF5D48)
         );
@@ -289,7 +293,7 @@ pub mod color_relativity {
         let color_to_test = GREEN;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xffACD69D)
         );
@@ -300,9 +304,13 @@ pub mod color_relativity {
         let color_to_test = GREEN;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xff8EFF77)
         );
@@ -313,7 +321,7 @@ pub mod color_relativity {
         let color_to_test = BLUE;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xff343654)
         );
@@ -324,9 +332,13 @@ pub mod color_relativity {
         let color_to_test = BLUE;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xff3F49FF)
         );
@@ -337,7 +349,7 @@ pub mod color_relativity {
         let color_to_test = WHITE;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xffFFFFFF)
         );
@@ -348,9 +360,13 @@ pub mod color_relativity {
         let color_to_test = WHITE;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xffFFFFFF)
         );
@@ -361,7 +377,7 @@ pub mod color_relativity {
         let color_to_test = MIDGRAY;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xff605F5F)
         );
@@ -372,9 +388,13 @@ pub mod color_relativity {
         let color_to_test = MIDGRAY;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xff8E8E8E)
         );
@@ -385,7 +405,7 @@ pub mod color_relativity {
         let color_to_test = BLACK;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(ViewingConditions::make(None, None, Some(0.0), None, None,))
+            hct.in_viewing_conditions(&ViewingConditions::make(None, None, Some(0.0), None, None,))
                 .to_int(),
             (0xff000000)
         );
@@ -396,9 +416,13 @@ pub mod color_relativity {
         let color_to_test = BLACK;
         let hct = Hct::from_int(color_to_test);
         assert_eq!(
-            hct.in_viewing_conditions(
-                ViewingConditions::make(None, None, Some(100.0), None, None,)
-            )
+            hct.in_viewing_conditions(&ViewingConditions::make(
+                None,
+                None,
+                Some(100.0),
+                None,
+                None,
+            ))
             .to_int(),
             (0xff000000)
         );

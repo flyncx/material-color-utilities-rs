@@ -75,7 +75,7 @@ impl Score {
     /// number of colors returned is 4, simply because thats the # of colors
     /// display in Android 12's wallpaper picker.
     pub fn score(
-        colors_to_population: HashMap<i64, i64>,
+        colors_to_population: &HashMap<i64, i64>,
         desired: Option<i64>,
         fallback_color_argb: Option<i64>,
         filter: Option<bool>,
@@ -92,7 +92,7 @@ impl Score {
         for (key, value) in colors_to_population {
             let argb = key;
             let population = value;
-            let hct = Hct::from_int(argb);
+            let hct = Hct::from_int(*argb);
             colors_hct.push(hct.clone());
             let hue = hct.get_hue().floor();
             hue_population[hue as usize] += population;

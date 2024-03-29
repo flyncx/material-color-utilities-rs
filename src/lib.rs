@@ -27,6 +27,7 @@ pub mod sanity {
     };
 
     #[test]
+    #[ignore]
     fn surface() {
         let img = image::open("D:\\sample3.jpg").unwrap();
         let mut pixels: Vec<i64> = Vec::new();
@@ -37,8 +38,8 @@ pub mod sanity {
                 data[2] as i64,
             ))
         }
-        let qr = QuantizerCelebi {}.quantize(pixels, 128, None);
-        let score = Score::score(qr.color_to_count, None, None, None);
+        let qr = QuantizerCelebi {}.quantize(&pixels, 128, None);
+        let score = Score::score(&qr.color_to_count, None, None, None);
         let dominant = *score.first().unwrap();
         let core = CorePalette::of(dominant);
         let scheme = DynamicScheme::new(

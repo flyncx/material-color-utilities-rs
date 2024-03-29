@@ -3,7 +3,7 @@ use std::collections::HashMap;
 pub trait Quantizer {
     fn quantize(
         &mut self,
-        pixels: Vec<i64>,
+        pixels: &Vec<i64>,
         max_colors: i64,
         return_input_pixel_to_cluster_pixel: Option<bool>,
     ) -> QuantizerResult;

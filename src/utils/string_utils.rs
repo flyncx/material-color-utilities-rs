@@ -2,7 +2,7 @@ use super::color_utils::ColorUtils;
 
 pub struct StringUtils {}
 impl StringUtils {
-    fn _map_bool_string(value: bool, if_true: String, if_false: String) -> String {
+    fn _map_bool_string<'a>(value: bool, if_true: &'a str, if_false: &'a str) -> &'a str {
         if value {
             return if_true;
         } else {
@@ -19,7 +19,7 @@ impl StringUtils {
 
         return format!(
             "{}{}",
-            Self::_map_bool_string(leading_hash_sign, "#".to_string(), "".to_string()),
+            Self::_map_bool_string(leading_hash_sign, "#", ""),
             format!("{:02x}{:02x}{:02x}", red, green, blue).to_uppercase()
         );
     }

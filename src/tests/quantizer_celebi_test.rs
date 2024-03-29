@@ -10,7 +10,7 @@ const MAX_COLORS: i64 = 256;
 #[test]
 fn _1_r() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([RED].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[RED].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&RED).is_some());
@@ -19,7 +19,7 @@ fn _1_r() {
 #[test]
 fn _1_g() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([GREEN].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[GREEN].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&GREEN).is_some());
@@ -28,7 +28,7 @@ fn _1_g() {
 #[test]
 fn _1_b() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([BLUE].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[BLUE].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&BLUE).is_some());
@@ -37,7 +37,7 @@ fn _1_b() {
 #[test]
 fn _5_b() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([BLUE, BLUE, BLUE, BLUE, BLUE].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[BLUE, BLUE, BLUE, BLUE, BLUE].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&BLUE).is_some());
@@ -46,7 +46,7 @@ fn _5_b() {
 #[test]
 fn _1_r_1_g_1_b() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([RED, GREEN, BLUE].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[RED, GREEN, BLUE].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 3);
     assert_eq!(true, colors.get(&RED).is_some());
@@ -57,7 +57,7 @@ fn _1_r_1_g_1_b() {
 #[test]
 fn _2_r_3_g() {
     let celebi = &mut QuantizerCelebi {};
-    let result = celebi.quantize([RED, RED, GREEN, GREEN, GREEN].to_vec(), MAX_COLORS, None);
+    let result = celebi.quantize(&[RED, RED, GREEN, GREEN, GREEN].to_vec(), MAX_COLORS, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 2);
     assert_eq!(true, colors.get(&RED).is_some());

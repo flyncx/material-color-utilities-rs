@@ -14,10 +14,10 @@ pub struct CorePalette {
     pub tertiary: TonalPalette,
     pub neutral: TonalPalette,
     pub neutral_variant: TonalPalette,
+    pub error: TonalPalette,
 }
 impl CorePalette {
-    // pub const error: TonalPalette = TonalPalette::of(25.0, 84.0);
-    pub fn get_error() -> TonalPalette {
+    fn _default_error() -> TonalPalette {
         TonalPalette::of(25.0, 84.0)
     }
 
@@ -37,6 +37,7 @@ impl CorePalette {
             tertiary: TonalPalette::of(hue + 60.0, 24.0),
             neutral: TonalPalette::of(hue, 4.0),
             neutral_variant: TonalPalette::of(hue, 8.0),
+            error: Self::_default_error(),
         }
     }
 
@@ -53,6 +54,7 @@ impl CorePalette {
             tertiary: TonalPalette::of(hue + 60.0, chroma / 2.0),
             neutral: TonalPalette::of(hue, (chroma / 12.0).min(4.0)),
             neutral_variant: TonalPalette::of(hue, (chroma / 6.0).min(8.0)),
+            error: Self::_default_error(),
         }
     }
 
@@ -60,34 +62,27 @@ impl CorePalette {
     /// representing concatenated tonal palettes.
     ///
     /// Inverse of [asList].
-    pub fn from_list(colors: Vec<i64>) -> CorePalette {
+    pub fn from_list(colors: &Vec<i64>) -> CorePalette {
         assert!(colors.len() == Self::SIZE * TonalPalette::COMMON_SIZE);
         CorePalette {
-            primary: TonalPalette::from_list(_get_partition(
-                colors.clone(),
-                0,
-                TonalPalette::COMMON_SIZE,
-            )),
-            secondary: TonalPalette::from_list(_get_partition(
-                colors.clone(),
+            primary: TonalPalette::from_list(&_get_partition(colors, 0, TonalPalette::COMMON_SIZE)),
+            secondary: TonalPalette::from_list(&_get_partition(
+                colors,
                 1,
                 TonalPalette::COMMON_SIZE,
             )),
-            tertiary: TonalPalette::from_list(_get_partition(
-                colors.clone(),
+            tertiary: TonalPalette::from_list(&_get_partition(
+                colors,
                 2,
                 TonalPalette::COMMON_SIZE,
             )),
-            neutral: TonalPalette::from_list(_get_partition(
-                colors.clone(),
-                3,
-                TonalPalette::COMMON_SIZE,
-            )),
-            neutral_variant: TonalPalette::from_list(_get_partition(
+            neutral: TonalPalette::from_list(&_get_partition(colors, 3, TonalPalette::COMMON_SIZE)),
+            neutral_variant: TonalPalette::from_list(&_get_partition(
                 colors,
                 4,
                 TonalPalette::COMMON_SIZE,
             )),
+            error: Self::_default_error(),
         }
     }
 
@@ -114,7 +109,7 @@ impl CorePalette {
 //
 // range.getPartition(0, 3) // [1, 2, 3]
 // range.getPartition(1, 3) // [4, 5, 6]
-fn _get_partition(list: Vec<i64>, partition_number: usize, partition_size: usize) -> Vec<i64> {
+fn _get_partition(list: &Vec<i64>, partition_number: usize, partition_size: usize) -> Vec<i64> {
     /* return list.sublist(
         partitionNumber * partitionSize,
         (partitionNumber + 1) * partitionSize,
@@ -138,7 +133,7 @@ impl ToString for CorePalette {
             self.tertiary.to_string(),
             self.neutral.to_string(),
             self.neutral_variant.to_string(),
-            Self::get_error().to_string()
+            self.error.to_string()
         );
     }
 }

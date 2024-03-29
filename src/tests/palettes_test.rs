@@ -9,9 +9,9 @@ pub mod tonal_palette {
             let a1 = TonalPalette::of(1.0, 1.0);
             let a2 = TonalPalette::of(1.0, 1.0);
             let b1 =
-                TonalPalette::from_list(TonalPalette::COMMON_TONES.map(|_| 0xDEADBEEF).to_vec());
+                TonalPalette::from_list(&TonalPalette::COMMON_TONES.map(|_| 0xDEADBEEF).to_vec());
             let b2 =
-                TonalPalette::from_list(TonalPalette::COMMON_TONES.map(|_| 0xDEADBEEF).to_vec());
+                TonalPalette::from_list(&TonalPalette::COMMON_TONES.map(|_| 0xDEADBEEF).to_vec());
             assert_eq!(a1 == b1, false);
             assert_eq!(b1 == a1, false);
             assert_eq!(a1 != b1, true);
@@ -19,10 +19,10 @@ pub mod tonal_palette {
             assert_eq!(a1 == a2, true);
             assert_eq!(b1 == b2, true);
 
-            let mut c1 = TonalPalette::from_list(TonalPalette::COMMON_TONES.map(|_| 123).to_vec());
+            let mut c1 = TonalPalette::from_list(&TonalPalette::COMMON_TONES.map(|_| 123).to_vec());
 
             let mut c2 = TonalPalette::from_list(
-                TonalPalette::COMMON_TONES
+                &TonalPalette::COMMON_TONES
                     .map(|e| if e < 15 { 456 } else { 123 })
                     .to_vec(),
             );
@@ -135,7 +135,7 @@ pub mod tonal_palette {
             ]
         }
         fn rebuilt_palette() -> TonalPalette {
-            TonalPalette::from_list(broken_palette().to_vec())
+            TonalPalette::from_list(&broken_palette().to_vec())
         }
 
         #[test]
@@ -146,7 +146,7 @@ pub mod tonal_palette {
 
         #[test]
         fn low_chroma_noise_does_not_affect_the_hue_and_chroma_deduced() {
-            let rebuilt_clean_palette = TonalPalette::from_list(cached_palette());
+            let rebuilt_clean_palette = TonalPalette::from_list(&cached_palette());
             assert_eq!(rebuilt_palette().hue, rebuilt_clean_palette.hue);
             assert_eq!(rebuilt_palette().chroma, rebuilt_clean_palette.chroma);
         }
@@ -189,7 +189,7 @@ pub mod tonal_palette {
         #[test]
         fn as_list() {
             let ints: Vec<i64> = (0..TonalPalette::COMMON_SIZE).map(|i| i as i64).collect();
-            let mut tones = TonalPalette::from_list(ints.clone());
+            let mut tones = TonalPalette::from_list(&ints.clone());
             assert_eq!(tones.get_as_list(), ints);
         }
 
@@ -211,11 +211,11 @@ pub mod tonal_palette {
             let palette2 = TonalPalette::of(180.0, 36.0);
             let palette3 = TonalPalette::of(270.0, 12.0);
 
-            let palette4 = TonalPalette::from_list(palette1.get_as_list());
+            let palette4 = TonalPalette::from_list(&palette1.get_as_list());
             let mut broken_list = palette1.clone().get_as_list();
             broken_list[2] = Hct::from(180.0, 24.0, 20.0).to_int();
             broken_list[9] = Hct::from(0.0, 12.0, 90.0).to_int();
-            let palette5 = TonalPalette::from_list(broken_list);
+            let palette5 = TonalPalette::from_list(&broken_list);
 
             assert_eq!(palette1, palette1);
             assert!(palette1 != (palette2));
@@ -274,7 +274,7 @@ pub mod core_palette {
         let ints: Vec<i64> = (0..(CorePalette::SIZE * TonalPalette::COMMON_SIZE))
             .map(|i| i as i64)
             .collect();
-        let mut core_palette = CorePalette::from_list(ints.clone());
+        let mut core_palette = CorePalette::from_list(&ints);
         assert_eq!(core_palette.as_list(), ints);
     }
 

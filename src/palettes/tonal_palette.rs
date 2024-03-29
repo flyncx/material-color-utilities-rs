@@ -29,12 +29,12 @@ impl TonalPalette {
 
     pub const COMMON_SIZE: usize = Self::COMMON_TONES.len();
 
-    fn _from_hct(hct: Hct) -> TonalPalette {
+    fn _from_hct(hct: &Hct) -> TonalPalette {
         TonalPalette {
             _cache: HashMap::new(),
             hue: hct.get_hue(),
             chroma: hct.get_chroma(),
-            key_color: hct,
+            key_color: hct.clone(),
             _is_from_cache: false,
         }
     }
@@ -49,11 +49,11 @@ impl TonalPalette {
         }
     }
 
-    fn _from_cache(cache: HashMap<i64, i64>, hue: f64, chroma: f64) -> TonalPalette {
+    fn _from_cache(cache: &HashMap<i64, i64>, hue: f64, chroma: f64) -> TonalPalette {
         TonalPalette {
             hue,
             chroma,
-            _cache: cache,
+            _cache: cache.clone(),
             key_color: Self::create_key_color(hue, chroma),
             _is_from_cache: true,
         }
@@ -65,14 +65,14 @@ impl TonalPalette {
     }
 
     /// Create a Tonal Palette from hue and chroma of [hct].
-    pub fn from_hct(hct: Hct) -> TonalPalette {
+    pub fn from_hct(hct: &Hct) -> TonalPalette {
         return TonalPalette::_from_hct(hct);
     }
 
     /// Create colors from a fixed-size list of ARGB color ints.
     ///
     /// Inverse of [TonalPalette.asList].
-    pub fn from_list(colors: Vec<i64>) -> TonalPalette {
+    pub fn from_list(colors: &Vec<i64>) -> TonalPalette {
         assert!(colors.len() == Self::COMMON_SIZE);
         let mut cache: HashMap<i64, i64> = HashMap::new();
 
@@ -85,7 +85,7 @@ impl TonalPalette {
         let mut best_hue = 0.0;
         let mut best_chroma = 0.0;
         for argb in colors {
-            let hct = Hct::from_int(argb);
+            let hct = Hct::from_int(*argb);
 
             // If the color is too close to white, its chroma may have been
             // affected by a known issue, so we ignore it.
@@ -101,7 +101,7 @@ impl TonalPalette {
             }
         }
 
-        return TonalPalette::_from_cache(cache, best_hue, best_chroma);
+        return TonalPalette::_from_cache(&cache, best_hue, best_chroma);
     }
 
     /// Creates a key color from a [hue] and a [chroma].
@@ -192,11 +192,14 @@ impl TonalPalette {
 
 impl ToString for TonalPalette {
     fn to_string(&self) -> String {
-        let mut copy = self.clone();
+        let mut mutable_clone = self.clone();
         if self._is_from_cache {
-            return format!("TonalPalette.of({}, {})", copy.hue, copy.chroma);
+            return format!(
+                "TonalPalette.of({}, {})",
+                mutable_clone.hue, mutable_clone.chroma
+            );
         } else {
-            let list = copy.get_as_list();
+            let list = mutable_clone.get_as_list();
             let mp: Vec<String> = list.iter().map(|it| it.to_string()).collect();
             return format!("TonalPalette.fromList([{}])", mp.join(", "));
         }

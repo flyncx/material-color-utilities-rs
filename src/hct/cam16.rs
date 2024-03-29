@@ -96,7 +96,7 @@ impl Cam16 {
     /// CAM16 instances also have coordinates in the CAM16-UCS space, called J*,
     /// a*, b*, or jstar, astar, bstar in code. CAM16-UCS is included in the CAM16
     /// specification, and should be used when measuring distances between colors.
-    pub fn distance(&self, other: Cam16) -> f64 {
+    pub fn distance(&self, other: &Cam16) -> f64 {
         let d_j = self.jstar - other.jstar;
         let d_a = self.astar - other.astar;
         let d_b = self.bstar - other.bstar;
@@ -108,13 +108,13 @@ impl Cam16 {
     /// Convert [argb] to CAM16, assuming the color was viewed in default viewing
     /// conditions.
     pub fn from_int(argb: i64) -> Cam16 {
-        return Self::from_int_in_viewing_conditions(argb, ViewingConditions::s_rgb());
+        return Self::from_int_in_viewing_conditions(argb, &ViewingConditions::s_rgb());
     }
 
     /// Given [viewingConditions], convert [argb] to CAM16.
     pub fn from_int_in_viewing_conditions(
         argb: i64,
-        viewing_conditions: ViewingConditions,
+        viewing_conditions: &ViewingConditions,
     ) -> Cam16 {
         // Transform ARGB int to XYZ
         let xyz = ColorUtils::xyz_from_argb(argb);
@@ -130,7 +130,7 @@ impl Cam16 {
         x: f64,
         y: f64,
         z: f64,
-        viewing_conditions: ViewingConditions,
+        viewing_conditions: &ViewingConditions,
     ) -> Cam16 {
         // Transform XYZ to 'cone'/'rgb' responses
         let r_c = 0.401288 * x + 0.650173 * y - 0.051461 * z;
@@ -214,7 +214,7 @@ impl Cam16 {
     /// Create a CAM16 color from lightness [j], chroma [c], and hue [h],
     /// assuming the color was viewed in default viewing conditions.
     pub fn from_jch(j: f64, c: f64, h: f64) -> Cam16 {
-        return Self::from_jch_in_viewing_conditions(j, c, h, ViewingConditions::s_rgb());
+        return Self::from_jch_in_viewing_conditions(j, c, h, &ViewingConditions::s_rgb());
     }
 
     /// Create a CAM16 color from lightness [j], chroma [c], and hue [h],
@@ -223,7 +223,7 @@ impl Cam16 {
         j: f64,
         c: f64,
         h: f64,
-        viewing_conditions: ViewingConditions,
+        viewing_conditions: &ViewingConditions,
     ) -> Cam16 {
         let q = (4.0 / viewing_conditions.c)
             * (j / 100.0).sqrt()
@@ -248,7 +248,7 @@ impl Cam16 {
             jstar,
             astar,
             bstar,
-            ViewingConditions::standard(),
+            &ViewingConditions::standard(),
         );
     }
 
@@ -258,7 +258,7 @@ impl Cam16 {
         jstar: f64,
         astar: f64,
         bstar: f64,
-        viewing_conditions: ViewingConditions,
+        viewing_conditions: &ViewingConditions,
     ) -> Cam16 {
         let a = astar;
         let b = bstar;
@@ -277,7 +277,7 @@ impl Cam16 {
     /// ARGB representation of color, assuming the color was viewed in default
     /// viewing conditions.
     pub fn to_int(&self) -> i64 {
-        return Self::viewed(self, ViewingConditions::s_rgb());
+        return Self::viewed(self, &ViewingConditions::s_rgb());
     }
 
     // Avoid allocations during conversion by pre-allocating an array.
@@ -285,11 +285,11 @@ impl Cam16 {
 
     /// ARGB representation of a color, given the color was viewed in
     /// [viewingConditions]
-    pub fn viewed(&self, viewing_conditions: ViewingConditions) -> i64 {
+    pub fn viewed(&self, viewing_conditions: &ViewingConditions) -> i64 {
         let xyz = Self::xyz_in_viewing_conditions(
             self,
             viewing_conditions,
-            Some(Self::_VIEWED_ARRAY.to_vec()),
+            Some(&Self::_VIEWED_ARRAY.to_vec()),
         );
         let argb = ColorUtils::argb_from_xyz(xyz[0], xyz[1], xyz[2]);
         return argb;
@@ -298,8 +298,8 @@ impl Cam16 {
     /// XYZ representation of CAM16 seen in [viewingConditions].
     pub fn xyz_in_viewing_conditions(
         &self,
-        viewing_conditions: ViewingConditions,
-        array: Option<Vec<f64>>,
+        viewing_conditions: &ViewingConditions,
+        array: Option<&Vec<f64>>,
     ) -> Vec<f64> {
         let alpha = {
             if self.chroma == 0.0 || self.j == 0.0 {

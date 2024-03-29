@@ -9,15 +9,15 @@ impl PointProviderLab {
     }
 }
 impl PointProvider for PointProviderLab {
-    fn from_int(argb: i64) -> Vec<f64> {
+    fn from_int(&self, argb: i64) -> Vec<f64> {
         return ColorUtils::lab_from_argb(argb);
     }
 
-    fn to_int(lab: Vec<f64>) -> i64 {
+    fn to_int(&self, lab: &Vec<f64>) -> i64 {
         ColorUtils::argb_from_lab(lab[0], lab[1], lab[2])
     }
 
-    fn distance(one: Vec<f64>, two: Vec<f64>) -> f64 {
+    fn distance(&self, one: &Vec<f64>, two: &Vec<f64>) -> f64 {
         let d_l = one[0] - two[0];
         let d_a = one[1] - two[1];
         let d_b = one[2] - two[2];

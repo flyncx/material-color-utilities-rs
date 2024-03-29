@@ -10,7 +10,7 @@ const MAX_COLORS: i64 = 256;
 #[test]
 fn _1_rando() {
     let result =
-        QuantizerWsmeans::quantize([0xff141216].to_vec(), MAX_COLORS, None, None, None, None);
+        QuantizerWsmeans::quantize(&[0xff141216].to_vec(), MAX_COLORS, None, None, None, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&0xff141216).is_some());
@@ -18,7 +18,7 @@ fn _1_rando() {
 
 #[test]
 fn _1_r() {
-    let result = QuantizerWsmeans::quantize([RED].to_vec(), MAX_COLORS, None, None, None, None);
+    let result = QuantizerWsmeans::quantize(&[RED].to_vec(), MAX_COLORS, None, None, None, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&RED).is_some());
@@ -26,7 +26,7 @@ fn _1_r() {
 
 #[test]
 fn _1_g() {
-    let result = QuantizerWsmeans::quantize([GREEN].to_vec(), MAX_COLORS, None, None, None, None);
+    let result = QuantizerWsmeans::quantize(&[GREEN].to_vec(), MAX_COLORS, None, None, None, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&GREEN).is_some());
@@ -34,7 +34,7 @@ fn _1_g() {
 
 #[test]
 fn _1_b() {
-    let result = QuantizerWsmeans::quantize([BLUE].to_vec(), MAX_COLORS, None, None, None, None);
+    let result = QuantizerWsmeans::quantize(&[BLUE].to_vec(), MAX_COLORS, None, None, None, None);
     let colors = result.color_to_count;
     assert_eq!(colors.len(), 1);
     assert_eq!(true, colors.get(&BLUE).is_some());
@@ -43,7 +43,7 @@ fn _1_b() {
 #[test]
 fn _5_b() {
     let result = QuantizerWsmeans::quantize(
-        [BLUE, BLUE, BLUE, BLUE, BLUE].to_vec(),
+        &[BLUE, BLUE, BLUE, BLUE, BLUE].to_vec(),
         MAX_COLORS,
         None,
         None,

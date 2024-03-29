@@ -2,19 +2,19 @@ use crate::{hct::hct::Hct, temperature::temperature_cache::TemperatureCache};
 
 #[test]
 fn raw_temperature() {
-    let blue_temp = TemperatureCache::raw_temperature(Hct::from_int(0xff0000ff));
+    let blue_temp = TemperatureCache::raw_temperature(&Hct::from_int(0xff0000ff));
     assert_approx_eq::assert_approx_eq!(blue_temp, -1.393, 0.001);
 
-    let red_temp = TemperatureCache::raw_temperature(Hct::from_int(0xffff0000));
+    let red_temp = TemperatureCache::raw_temperature(&Hct::from_int(0xffff0000));
     assert_approx_eq::assert_approx_eq!(red_temp, 2.351, 0.001);
 
-    let green_temp = TemperatureCache::raw_temperature(Hct::from_int(0xff00ff00));
+    let green_temp = TemperatureCache::raw_temperature(&Hct::from_int(0xff00ff00));
     assert_approx_eq::assert_approx_eq!(green_temp, -0.267, 0.001);
 
-    let white_temp = TemperatureCache::raw_temperature(Hct::from_int(0xffffffff));
+    let white_temp = TemperatureCache::raw_temperature(&Hct::from_int(0xffffffff));
     assert_approx_eq::assert_approx_eq!(white_temp, -0.5, 0.001);
 
-    let black_temp = TemperatureCache::raw_temperature(Hct::from_int(0xff000000));
+    let black_temp = TemperatureCache::raw_temperature(&Hct::from_int(0xff000000));
     assert_approx_eq::assert_approx_eq!(black_temp, -0.5, 0.001);
 }
 

@@ -330,9 +330,9 @@ impl HctSolver {
 
     /// Returns the hue of [linrgb], a linear RGB color, in CAM16, in
     /// radians.
-    fn _hue_of(linrgb: Vec<f64>) -> f64 {
+    fn _hue_of(linrgb: &Vec<f64>) -> f64 {
         let scaled_discount = MathUtils::matrix_multiply(
-            linrgb,
+            linrgb.to_vec(),
             Self::_SCALED_DISCOUNT_FROM_LINRGB
                 .iter()
                 .map(|it| it.to_vec())
@@ -362,7 +362,7 @@ impl HctSolver {
         return (mid - source) / (target - source);
     }
 
-    fn _lerp_point(source: Vec<f64>, t: f64, target: Vec<f64>) -> Vec<f64> {
+    fn _lerp_point(source: &Vec<f64>, t: f64, target: &Vec<f64>) -> Vec<f64> {
         return [
             source[0] + (target[0] - source[0]) * t,
             source[1] + (target[1] - source[1]) * t,
@@ -379,7 +379,12 @@ impl HctSolver {
     /// ... R = [coordinate] if [axis] == 0
     /// ... G = [coordinate] if [axis] == 1
     /// ... B = [coordinate] if [axis] == 2
-    fn _set_coordinate(source: Vec<f64>, coordinate: f64, target: Vec<f64>, axis: i64) -> Vec<f64> {
+    fn _set_coordinate(
+        source: &Vec<f64>,
+        coordinate: f64,
+        target: &Vec<f64>,
+        axis: i64,
+    ) -> Vec<f64> {
         let t = Self::_intercept(source[axis as usize], coordinate, target[axis as usize]);
         return Self::_lerp_point(source, t, target);
     }
@@ -462,7 +467,7 @@ impl HctSolver {
             if mid[0] < 0.0 {
                 continue;
             }
-            let mid_hue = Self::_hue_of(mid.clone());
+            let mid_hue = Self::_hue_of(&mid);
             if !initialized {
                 left = mid.clone();
                 right = mid;
@@ -485,7 +490,7 @@ impl HctSolver {
         return [left, right].to_vec();
     }
 
-    fn _midpoint(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
+    fn _midpoint(a: &Vec<f64>, b: &Vec<f64>) -> Vec<f64> {
         return [
             (a[0] + b[0]) / 2.0,
             (a[1] + b[1]) / 2.0,
@@ -510,7 +515,7 @@ impl HctSolver {
     fn _bisect_to_limit(y: f64, target_hue: f64) -> Vec<f64> {
         let segment = Self::_bisect_to_segment(y, target_hue);
         let mut left = segment[0].clone();
-        let mut left_hue = Self::_hue_of(left.clone());
+        let mut left_hue = Self::_hue_of(&left);
         let mut right = segment[1].clone();
         for axis in 0..3 {
             if left[axis] != right[axis] {
@@ -531,13 +536,9 @@ impl HctSolver {
                     } else {
                         let m_plane = ((l_plane + r_plane) as f64 / 2.0).floor() as i64;
                         let mid_plane_coordinate = Self::_critical_planes()[m_plane as usize];
-                        let mid = Self::_set_coordinate(
-                            left.clone(),
-                            mid_plane_coordinate,
-                            right.clone(),
-                            axis as i64,
-                        );
-                        let mid_hue = Self::_hue_of(mid.clone());
+                        let mid =
+                            Self::_set_coordinate(&left, mid_plane_coordinate, &right, axis as i64);
+                        let mid_hue = Self::_hue_of(&mid);
                         if Self::_are_in_cyclic_order(left_hue, target_hue, mid_hue) {
                             right = mid;
                             r_plane = m_plane;
@@ -550,7 +551,7 @@ impl HctSolver {
                 }
             }
         }
-        return Self::_midpoint(left, right);
+        return Self::_midpoint(&left, &right);
     }
 
     fn _inverse_chromatic_adaptation(adapted: f64) -> f64 {

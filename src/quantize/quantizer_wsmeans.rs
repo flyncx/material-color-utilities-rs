@@ -43,15 +43,17 @@ impl QuantizerWsmeans {
     }
 
     pub fn quantize(
-        input_pixels: Vec<i64>,
+        input_pixels: &Vec<i64>,
         max_colors: i64,
-        starting_clusters: Option<Vec<i64>>,
-        point_provider: Option<PointProviderLab>,
+        starting_clusters: Option<&Vec<i64>>,
+        point_provider: Option<&PointProviderLab>,
         max_iterations: Option<i64>,
         return_input_pixel_to_cluster_pixel: Option<bool>,
     ) -> QuantizerResult {
-        let starting_clusters = starting_clusters.unwrap_or(Vec::new());
-        let _point_provider = point_provider.unwrap_or(PointProviderLab::new());
+        let starting_clusters_default = Vec::new();
+        let starting_clusters = starting_clusters.unwrap_or(&starting_clusters_default);
+        let point_provider_default = PointProviderLab::new();
+        let point_provider = point_provider.unwrap_or(&point_provider_default);
         let max_iterations = max_iterations.unwrap_or(5);
         let return_input_pixel_to_cluster_pixel =
             return_input_pixel_to_cluster_pixel.unwrap_or(false);
@@ -63,13 +65,13 @@ impl QuantizerWsmeans {
         let mut point_count = 0;
         for input_pixel in input_pixels {
             let pixel_count = pixel_to_count
-                .entry(input_pixel)
+                .entry(*input_pixel)
                 .and_modify(|value| *value += 1)
                 .or_insert(1);
             if pixel_count.clone() == 1 {
                 point_count += 1;
-                points.push(PointProviderLab::from_int(input_pixel));
-                pixels.push(input_pixel);
+                points.push(point_provider.from_int(*input_pixel));
+                pixels.push(*input_pixel);
             }
         }
 
@@ -84,7 +86,7 @@ impl QuantizerWsmeans {
 
         let mut clusters: Vec<Vec<f64>> = starting_clusters
             .iter()
-            .map(|e| PointProviderLab::from_int(*e))
+            .map(|e| point_provider.from_int(*e))
             .collect();
         let additional_clusters_needed = cluster_count - clusters.len() as i64;
         if additional_clusters_needed > 0 {
@@ -165,9 +167,9 @@ impl QuantizerWsmeans {
             let mut points_moved = 0;
             for i in 0..cluster_count {
                 for j in (i + 1)..cluster_count {
-                    let distance = PointProviderLab::distance(
-                        clusters[i as usize].iter().map(|it| *it).collect(),
-                        clusters[j as usize].iter().map(|it| *it).collect(),
+                    let distance = point_provider.distance(
+                        &clusters[i as usize].iter().map(|it| *it).collect(),
+                        &clusters[j as usize].iter().map(|it| *it).collect(),
                     );
                     distance_to_index_matrix[j as usize][i as usize].distance = distance;
                     distance_to_index_matrix[j as usize][i as usize].index = i;
@@ -186,7 +188,7 @@ impl QuantizerWsmeans {
                 let previous_cluster_index = cluster_indices[i];
                 let previous_cluster = &clusters[previous_cluster_index as usize];
                 let previous_distance =
-                    PointProviderLab::distance(point.to_vec(), previous_cluster.to_vec());
+                    point_provider.distance(&point.to_vec(), &previous_cluster.to_vec());
                 let mut minimum_distance = previous_distance;
                 let mut new_cluster_index = -1;
                 for j in 0..cluster_count {
@@ -196,9 +198,9 @@ impl QuantizerWsmeans {
                     {
                         continue;
                     }
-                    let distance = PointProviderLab::distance(
-                        point.to_vec(),
-                        clusters[j as usize].iter().map(|it| *it).collect(),
+                    let distance = point_provider.distance(
+                        &point.to_vec(),
+                        &clusters[j as usize].iter().map(|it| *it).collect(),
                     );
                     if distance < minimum_distance {
                         minimum_distance = distance;
@@ -259,7 +261,7 @@ impl QuantizerWsmeans {
             }
 
             let possible_new_cluster =
-                PointProviderLab::to_int(clusters[i as usize].iter().map(|it| *it).collect());
+                point_provider.to_int(&clusters[i as usize].iter().map(|it| *it).collect());
             if cluster_argbs.contains(&possible_new_cluster) {
                 continue;
             }
@@ -280,7 +282,7 @@ impl QuantizerWsmeans {
                 let input_pixel = pixels[i];
                 let cluster_index = cluster_indices[i as usize];
                 let cluster = &clusters[cluster_index as usize];
-                let cluster_pixel = PointProviderLab::to_int(cluster.to_vec());
+                let cluster_pixel = point_provider.to_int(&cluster.to_vec());
                 input_pixel_to_cluster_pixel.insert(input_pixel, cluster_pixel);
             }
             Self::debug_log(format!(

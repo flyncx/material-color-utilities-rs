@@ -58,7 +58,7 @@ impl TemperatureCache {
 
         let start_hue = self.input.get_hue().round() as i64;
         let start_hct = &self.get_hcts_by_hue()[start_hue as usize];
-        let mut last_temp = self.relative_temperature(start_hct.clone());
+        let mut last_temp = self.relative_temperature(start_hct);
         let mut all_colors: Vec<Hct> = Vec::new();
         all_colors.push(start_hct.clone());
 
@@ -66,7 +66,7 @@ impl TemperatureCache {
         for i in 0..360 {
             let hue = MathUtils::sanitize_degrees_int(start_hue + i);
             let hct = &self.get_hcts_by_hue()[hue as usize];
-            let temp = self.relative_temperature(hct.clone());
+            let temp = self.relative_temperature(hct);
             let temp_delta = (temp - last_temp).abs();
             last_temp = temp;
             absolute_total_temp_delta += temp_delta;
@@ -74,11 +74,11 @@ impl TemperatureCache {
         let mut hue_addend = 1;
         let temp_step = absolute_total_temp_delta / divisions as f64;
         let mut total_temp_delta = 0.0;
-        last_temp = self.relative_temperature(start_hct.clone());
+        last_temp = self.relative_temperature(start_hct);
         while (all_colors.len() as i64) < divisions {
             let hue = MathUtils::sanitize_degrees_int(start_hue + hue_addend);
             let hct = &self.get_hcts_by_hue()[hue as usize];
-            let temp = self.relative_temperature(hct.clone());
+            let temp = self.relative_temperature(hct);
             let temp_delta = (temp - last_temp).abs();
             total_temp_delta += temp_delta;
 
@@ -201,7 +201,7 @@ impl TemperatureCache {
 
     /// Temperature relative to all colors with the same chroma and tone.
     /// Value on a scale from 0 to 1.
-    pub fn relative_temperature(&mut self, hct: Hct) -> f64 {
+    pub fn relative_temperature(&mut self, hct: &Hct) -> f64 {
         let range = self.get_temps_by_hct()[&self.get_warmest().clone()]
             - self.get_temps_by_hct()[&self.get_coldest()];
         let difference_from_coldest =
@@ -270,7 +270,7 @@ impl TemperatureCache {
         all_hcts.push(self.input.clone());
         let mut temperatures_by_hct: HashMap<Hct, f64> = HashMap::new();
         for e in all_hcts {
-            temperatures_by_hct.insert(e.clone(), Self::raw_temperature(e));
+            temperatures_by_hct.insert(e.clone(), Self::raw_temperature(&e));
         }
         //{for (var e in allHcts) e: rawTemperature(e)};
         self._temps_by_hct = temperatures_by_hct;
@@ -319,7 +319,7 @@ impl TemperatureCache {
     ///   Assuming max of 130 chroma, -9.66.
     /// - Upper bound: -0.52 + (chroma ^ 1.07 / 20). L*a*b* chroma is infinite.
     ///   Assuming max of 130 chroma, 8.61.
-    pub fn raw_temperature(color: Hct) -> f64 {
+    pub fn raw_temperature(color: &Hct) -> f64 {
         let lab = ColorUtils::lab_from_argb(color.to_int());
         let hue = MathUtils::sanitize_degrees_double(
             (lab[2]).atan2(lab[1]) * 180.0 / std::f64::consts::PI,
