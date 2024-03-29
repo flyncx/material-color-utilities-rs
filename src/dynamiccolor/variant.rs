@@ -1,7 +1,7 @@
 use core::hash::Hash;
 use std::hash::Hasher;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub enum Variant {
     /// All colors are grayscale, no chroma.
     Monochrome,

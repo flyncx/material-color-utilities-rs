@@ -27,6 +27,28 @@ pub mod sanity {
     };
 
     #[test]
+    fn primary() {
+        let dominant = 0xFF984061;
+        let core = CorePalette::of(dominant);
+        let scheme = DynamicScheme::new(
+            dominant,
+            Variant::TonalSpot,
+            None,
+            true,
+            core.primary,
+            core.secondary,
+            core.tertiary,
+            core.neutral,
+            core.neutral_variant,
+        );
+        //let scheme = DynamicScheme
+        println!(
+            "{}",
+            StringUtils::hex_from_argb(MaterialDynamicColors::primary().get_argb(&scheme), None)
+        )
+    }
+
+    #[test]
     #[ignore]
     fn surface() {
         let img = image::open("D:\\sample3.jpg").unwrap();

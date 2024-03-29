@@ -142,17 +142,163 @@ impl DynamicScheme {
     }
 
     // Getters.
-
+    pub fn get_primary_palette_key_color(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::primary_palette_key_color())
+    }
+    pub fn get_secondary_palette_key_color(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::secondary_palette_key_color())
+    }
+    pub fn get_tertiary_palette_key_color(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::tertiary_palette_key_color())
+    }
+    pub fn get_neutral_palette_key_color(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::neutral_palette_key_color())
+    }
+    pub fn get_neutral_variant_palette_key_color(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::neutral_variant_palette_key_color())
+    }
+    pub fn get_background(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::background())
+    }
+    pub fn get_on_background(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_background())
+    }
+    pub fn get_surface(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface())
+    }
     pub fn get_surface_dim(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::surface_dim())
     }
     pub fn get_surface_bright(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::surface_bright())
     }
+    pub fn get_surface_container_lowest(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_container_lowest())
+    }
+    pub fn get_surface_container_low(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_container_low())
+    }
+    pub fn get_surface_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_container())
+    }
+    pub fn get_surface_container_high(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_container_high())
+    }
+    pub fn get_surface_container_highest(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_container_highest())
+    }
+    pub fn get_on_surface(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_surface())
+    }
+    pub fn get_surface_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_variant())
+    }
+    pub fn get_on_surface_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_surface_variant())
+    }
+    pub fn get_inverse_surface(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::inverse_surface())
+    }
+    pub fn get_inverse_on_surface(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::inverse_on_surface())
+    }
+    pub fn get_outline(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::outline())
+    }
+    pub fn get_outline_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::outline_variant())
+    }
+    pub fn get_shadow(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::shadow())
+    }
+    pub fn get_scrim(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::scrim())
+    }
+    pub fn get_surface_tint(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::surface_tint())
+    }
     pub fn get_primary(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::primary())
     }
+    pub fn get_on_primary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_primary())
+    }
     pub fn get_primary_container(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::primary_container())
+    }
+    pub fn get_inverse_primary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::inverse_primary())
+    }
+    pub fn get_secondary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::secondary())
+    }
+    pub fn get_on_secondary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_secondary())
+    }
+    pub fn get_secondary_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::secondary_container())
+    }
+    pub fn get_on_secondary_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_secondary_container())
+    }
+    pub fn get_tertiary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::tertiary())
+    }
+    pub fn get_on_tertiary(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_tertiary())
+    }
+    pub fn get_tertiary_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::tertiary_container())
+    }
+    pub fn get_on_tertiary_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_tertiary_container())
+    }
+    pub fn get_error(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::error())
+    }
+    pub fn get_on_error(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_error())
+    }
+    pub fn get_error_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::error_container())
+    }
+    pub fn get_on_error_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_error_container())
+    }
+    pub fn get_primary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::primary_fixed())
+    }
+    pub fn get_primary_fixed_dim(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::primary_fixed_dim())
+    }
+    pub fn get_on_primary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_primary_fixed())
+    }
+    pub fn get_on_primary_fixed_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_primary_fixed_variant())
+    }
+    pub fn get_secondary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::secondary_fixed())
+    }
+    pub fn get_secondary_fixed_dim(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::secondary_fixed_dim())
+    }
+    pub fn get_on_secondary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_secondary_fixed())
+    }
+    pub fn get_on_secondary_fixed_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_secondary_fixed_variant())
+    }
+    pub fn get_tertiary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::tertiary_fixed())
+    }
+    pub fn get_tertiary_fixed_dim(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::tertiary_fixed_dim())
+    }
+    pub fn get_on_tertiary_fixed(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_tertiary_fixed())
+    }
+    pub fn get_on_tertiary_fixed_variant(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_tertiary_fixed_variant())
     }
 }
