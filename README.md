@@ -34,7 +34,7 @@ A rust port of material-color-utilities dart code.
 | quantizer_celebi   | ✅     |
 | quantizer_wsmeans  | ✅     |
 | quantizer_wu       | ✅     |
-| scheme_correctness | ❌     |
-| scheme_monochrome  | ❌     |
-| score              | ❌     |
+| scheme_correctness | ✅     |
+| scheme_monochrome  | ✅     |
+| score              | ✅     |
 | temperature_cache  | ✅     |
