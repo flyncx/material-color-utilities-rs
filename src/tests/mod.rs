@@ -7,6 +7,8 @@ pub mod contrast_test;
 #[cfg(test)]
 pub mod dislike_analyzer_test;
 #[cfg(test)]
+pub mod dynamic_color_test;
+#[cfg(test)]
 pub mod dynamic_scheme_test;
 #[cfg(test)]
 pub mod hct_round_trip_test;
