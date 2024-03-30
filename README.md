@@ -25,7 +25,7 @@ A rust port of material-color-utilities dart code.
 | color_utils        | ✅     |
 | contrast           | ✅     |
 | dislike_analyzer   | ✅     |
-| dynamic_color      | ❌     |
+| dynamic_color      | ✅     |
 | dynamic_scheme     | ✅     |
 | hct_round_trip     | ✅     |
 | hct                | ✅     |
