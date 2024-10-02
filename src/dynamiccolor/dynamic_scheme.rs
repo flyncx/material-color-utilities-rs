@@ -226,6 +226,9 @@ impl DynamicScheme {
     pub fn get_primary_container(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::primary_container())
     }
+    pub fn get_on_primary_container(&self) -> i64 {
+        self.get_argb(&mut MaterialDynamicColors::on_primary_container())
+    }
     pub fn get_inverse_primary(&self) -> i64 {
         self.get_argb(&mut MaterialDynamicColors::inverse_primary())
     }
